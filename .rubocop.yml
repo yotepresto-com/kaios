@@ -1,5 +1,16 @@
+require:
+  - rubocop-performance
+
 AllCops:
+  Exclude:
+    - 'vendor/**/*'
+    - 'spec/factories/**/*'
+    - 'tmp/**/*'
+    - 'bin/*'
+    - 'Gemfile'
+    - 'config/environments/*'
   TargetRubyVersion: 2.6
+  NewCops: enable
 
 Style/StringLiterals:
   Enabled: true
@@ -10,4 +21,37 @@ Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
 
 Layout/LineLength:
-  Max: 120
+  Max: 100
+
+# Too short methods lead to extraction of single-use methods, which can make
+# the code easier to read (by naming things), but can also clutter the class
+Metrics/MethodLength:
+  Max: 30
+  CountAsOne:
+    - 'array'
+    - 'hash'
+    - 'heredoc'
+
+# The guiding principle of classes is SRP, SRP can't be accurately measured by LoC
+Metrics/ClassLength:
+  Max: 1500
+
+  # Align `when` with `case`.
+Layout/CaseIndentation:
+  Enabled: true
+
+# Align comments with method definitions.
+Layout/CommentIndentation:
+  Enabled: true
+
+# No extra empty lines.
+Layout/EmptyLines:
+  Enabled: true
+
+# Use Ruby >= 1.9 syntax for hashes. Prefer { a: :b } over { :a => :b }.
+Style/HashSyntax:
+  Enabled: true
+
+# Two spaces, no tabs (for indentation).
+Layout/IndentationWidth:
+  Enabled: true
